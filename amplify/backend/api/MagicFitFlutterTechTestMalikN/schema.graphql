@@ -1,0 +1,26 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+enum WorkoutType {
+  BarbellRow
+  BenchPress
+  ShoulderPress
+  Deadlift
+  Squat
+}
+
+type Workout @model {
+  id: ID!
+  name: String!
+  description: String!
+  sets:  [WorkoutSet]! @hasMany
+}
+
+type WorkoutSet @model {
+  id: ID!
+  workout: Workout! @belongsTo
+  workoutType: WorkoutType!
+  weight: Int!
+  repetitions: Int!
+}
